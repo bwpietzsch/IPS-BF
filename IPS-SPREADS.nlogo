@@ -292,7 +292,7 @@ to import-GIS-data
   ]
 
   carefully [
-    set data1 (gis:load-dataset word path-to-input "poly.asc") ; import spruce proportions from stand data (asc)
+    set data1 (gis:load-dataset word path-to-input "location-spruces.asc") ; import spruce proportions from stand data (asc)
   ][
     error "No spruce proportion data found! Use 'poly.asc' as file name for import from entered file path."
   ]
@@ -397,12 +397,12 @@ to distribute-source-trees
 
   if source-data = TRUE [ ; data of infestation is used
     ask patches [
-      if inf = 1 and primattract > 0 [
+      if inf = 1 [
         set primattract 0 ; set primary attractiveness to 0
         set totalattract 0 ; set total attractiveness to 0
         set source (patch-set source self) ; add patch to agent set source
       ]
-      if inf = 2 and primattract > 0 [
+      if inf = 2 [
         set pcolor white
       ]
       if inf = 3 [
@@ -924,11 +924,11 @@ end
 GRAPHICS-WINDOW
 496
 13
-1210
-728
+1217
+735
 -1
 -1
-2.35
+8.8125
 1
 10
 1
@@ -939,9 +939,9 @@ GRAPHICS-WINDOW
 0
 1
 0
-300
+80
 0
-300
+80
 1
 1
 1
@@ -1270,7 +1270,7 @@ INPUTBOX
 490
 379
 path-to-input
-input/D/
+input/20182/A2/
 1
 0
 String
@@ -1898,7 +1898,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.0.4
+NetLogo 6.1.1
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
