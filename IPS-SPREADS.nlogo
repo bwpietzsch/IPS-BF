@@ -343,8 +343,7 @@ to create-environment
   ask patches [
     ifelse (primattract <= 0) or (primattract >= 0) [ ; check for NaNs in data (patches outside given research area)
       set infest-dist [] ; create empty list for storing infestation distance values of successfully infesting beetles on the corresponding patch
-      ifelse random-float 1 < spruceprop [ ; create randomly distributed spruce trees in accordance with forest inventory data
-      ][
+      if spruceprop = 0 and inf != 2 [ ; create randomly distributed spruce trees in accordance with forest inventory data
         set primattract 0 ; no spruce tree
       ]
       set nmin ((-21.25 * primattract) + 221.25) ; calculate infestation threshold according to Kautz et al. (2014)
