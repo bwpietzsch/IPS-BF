@@ -311,7 +311,7 @@ to import-GIS-data
     ][
       error "No infestation data found! Use 'inf.asc' as file name for import from entered file path."
     ]
-    gis:apply-raster data4 inf ; assign information on infestation time (1 = source, 2 = goal, 0 = some time before)
+    gis:apply-raster data4 inf ; assign information on infestation time (1 = source, 2 = goal, 0 = some time before, 4 = trap)
   ]
 
   carefully [
@@ -386,6 +386,17 @@ to create-environment
       ; if vegetation height exceeds beetle flight height windspeed reduction due to height and canopy flow index
       ; according to Mursch-Radlgruber & Kovacic (1988) is applied
       set local-speed (windspeed * exp ((-1 * roughness) * (1 - (6.3 / neighbor-height))))
+    ]
+    if inf = 4 [
+      set infestlev 4 ; set infestlevel to 4 (detention device)
+      set pcolor grey ; set patch color to grey
+      set primattract 0 ; set primary attractiveness to 0
+      set secattract 15 ; set secondary attractiveness to predefined pheromone dispenser attractiveness
+      set totalattract (primattract + secattract) ; calculate total attractiveness
+      set nmin 0 ; no tree defense
+      set nmax 1000000000 ; no capacity
+      set nstart 0 ; no beetle source
+      set device (patch-set self device) ; add patch to agentset "device"
     ]
   ]
 
@@ -1269,7 +1280,7 @@ INPUTBOX
 490
 379
 path-to-input
-input/20182/A2/
+input/2019/13/
 1
 0
 String
@@ -1313,7 +1324,7 @@ windspeed
 windspeed
 0
 5.5
-5.0
+0.0
 0.1
 1
 m/s
@@ -1583,6 +1594,23 @@ TEXTBOX
 proportion of host trees cut during sanitation (one cutting after each beetle generation)
 12
 0.0
+1
+
+BUTTON
+205
+730
+317
+763
+export-png
+ask device [set pcolor red]\nlet aa \"/home/bruno/Nextcloud/Koop-Felix/004-data-IPS-SPREADS/setups/\"\nif length path-to-input = 13 [\nexport-view (word aa (substring path-to-input 6 10) \"-\" (substring path-to-input 11 12)  \".png\")\n]\nif length path-to-input = 14 [\nexport-view (word aa (substring path-to-input 6 10) \"-\" (substring path-to-input 11 13)  \".png\")\n]\nif length path-to-input = 15 [\nexport-view (word aa (substring path-to-input 6 10) \"-\" (substring path-to-input 11 14)  \".png\")\n]
+NIL
+1
+T
+OBSERVER
+NIL
+E
+NIL
+NIL
 1
 
 @#$#@#$#@
@@ -1897,7 +1925,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.1.1
+NetLogo 6.2.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
